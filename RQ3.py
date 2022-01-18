@@ -174,19 +174,17 @@ if __name__ == '__main__':
             f1 = f1_score(y_test, result2, average='weighted')
             knn_f1_result1.append(f1)
 
-    print(dir_name)
-    print('random forest acc result:', np.max(forest_acc_results))
-    print('random forest f1 result:', np.max(forest_f1_results))
+    print('random forest acc result0:', np.max(forest_acc_results))
+    print('random forest f1 result0:', np.max(forest_f1_results))
 
-    print('knn acc result:', np.max(knn_acc_result))
-    print('knn f1 result:', np.max(knn_f1_result))
+    print('knn acc result0:', np.max(knn_acc_result))
+    print('knn f1 result0:', np.max(knn_f1_result))
 
-    print(dir_name1)
-    print('random forest result:', np.max(forest_acc_results1))
-    print('random forest f1 result:', np.max(forest_f1_results1))
+    print('random forest result1:', np.max(forest_acc_results1))
+    print('random forest f1 result1:', np.max(forest_f1_results1))
 
-    print('knn result:', np.max(knn_acc_result1))
-    print('knn f1 result:', np.max(knn_f1_result1))
+    print('knn result1:', np.max(knn_acc_result1))
+    print('knn f1 result1:', np.max(knn_f1_result1))
 
     print('数据统计:')
 
