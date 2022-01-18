@@ -143,7 +143,7 @@ def classifier():
 
 
 if __name__ == '__main__':
-    data_set = 'RQ2/5gan'
+    data_set = 'train'
     X, Y = load_data(data_set)
     shuffle_list(X, Y)
     test_set = 'validate'
@@ -160,6 +160,6 @@ if __name__ == '__main__':
     history = model1.fit(X, Y, epochs=50, batch_size=32, callbacks=callbacks_list, verbose=0,
                          validation_data=(x_test, y_test))
 
-    print('5gan')
+    print('train')
     print('最大精度:' + str(max(history.history['val_accuracy'])))
     print('最大f1:' + str(max(history.history['val_f1'])))
