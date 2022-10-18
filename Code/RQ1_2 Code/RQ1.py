@@ -2,6 +2,7 @@ import os
 
 import numpy as np
 import tensorflow.keras as tk
+from sklearn.metrics import roc_auc_score, f1_score, accuracy_score
 from tensorflow.keras import Sequential
 from tensorflow.keras import backend as K
 from tensorflow.keras.layers import Convolution2D, MaxPooling2D, Flatten, Dense, Dropout, Reshape
@@ -143,7 +144,7 @@ def classifier():
 
 
 if __name__ == '__main__':
-    data_set = '../../Dataset/RQ1/domain'
+    data_set = '../../Dataset/original_dataset/train'
     X, Y = load_data(data_set)
     shuffle_list(X, Y)
     test_set = '../../Dataset/original_dataset/validate'
@@ -153,12 +154,58 @@ if __name__ == '__main__':
     print('Shape of validate data tensor:', x_test.shape)
 
     model1 = classifier()
-    filepath = "../best_result.hdf5"
+    filepath = "../best_result1.hdf5"
     checkpoint = ModelCheckpoint(filepath, monitor='val_accuracy', verbose=1, save_best_only=True,
                                  model='max')
     callbacks_list = [checkpoint]
-    history = model1.fit(X, Y, epochs=50, batch_size=32, callbacks=callbacks_list, verbose=0,
+    history = model1.fit(X, Y, epochs=30, batch_size=32, callbacks=callbacks_list, verbose=0,
                          validation_data=(x_test, y_test))
+
+    model1.load_weights(filepath)
+    y_pre = model1.predict(x_test)
+
+    print(roc_auc_score(np.asarray(y_test), np.asarray(y_pre), multi_class='ovo'))
+    print(roc_auc_score(np.asarray(y_test), np.asarray(y_pre), average='micro', multi_class='ovo'))
+    #
+    print(roc_auc_score(np.asarray(y_test), np.asarray(y_pre), multi_class='ovr'))
+    print(roc_auc_score(np.asarray(y_test), np.asarray(y_pre), average='micro', multi_class='ovr'))
+
+    y_result = []
+    y_test_array = []
+    for item in y_pre:
+        max_value = -1
+        i = 0
+        max_index = 0
+        while i < 3:
+            if item[i] > max_value:
+                max_value = item[i]
+                max_index = i
+            i += 1
+        y_result.append(max_index)
+
+    for item in y_test:
+        max_value = -1
+        i = 0
+        max_index = 0
+        while i < 3:
+            if item[i] > max_value:
+                max_value = item[i]
+                max_index = i
+            i += 1
+        y_test_array.append(max_index)
+
+    print('micro f1 score:', f1_score(y_test_array, y_result, average='micro'))
+    print('macro f1 score:', f1_score(y_test_array, y_result, average='macro'))
+
+    true = 0
+    false = 0
+    for i in range(len(y_result)):
+        if y_result[i] == y_test_array[i]:
+            true += 1
+        else:
+            false += 1
+    print(true / (true + false))
+    print('acc:', accuracy_score(y_test_array, y_result))
 
     print('domain result:')
     print('最大精度:' + str(max(history.history['val_accuracy'])))

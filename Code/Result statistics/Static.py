@@ -17,14 +17,14 @@ def delta(list1, list2):
 
 
 if __name__ == '__main__':
-    resNet_result1 = [0.5, 0.59523809, 0.547619045, 0.547619045, 0.535714269, 0.571428597,
-                      0.535714269, 0.607142866, 0.476190478, 0.547619045]
-    resNet_result2 = [0.65476191, 0.797619045, 0.738095224, 0.702380955, 0.630952358,
-                      0.607142866, 0.511904776, 0.690476179, 0.702380955, 0.678571403]
+    resNet_result1 = [0.631,  0.481,  0.631,  0.481,  0.481,  0.481,  0.405,  0.405
+                      ]
+    resNet_result2 = [0.429,  0.583,  0.429,  0.583,  0.631,  0.631,  0.417,  0.583
+                      ]
 
     w_resNet, p_resNet = scipy.stats.brunnermunzel(resNet_result1, resNet_result2)
     print('resNet P:', p_resNet)
-    d_resNet = delta(resNet_result1, resNet_result2)
+    d_resNet = delta(resNet_result2, resNet_result1)
     print('resNet Delta', d_resNet)
 
     rf_result1 = [0.548, 0.5, 0.56, 0.56, 0.571, 0.548, 0.5, 0.56, 0.56, 0.571]

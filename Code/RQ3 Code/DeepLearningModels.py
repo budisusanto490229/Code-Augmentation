@@ -128,7 +128,7 @@ if __name__ == '__main__':
     resNetModel.add(Dense(units=16, activation='relu'))
     resNetModel.add(Dense(3, activation='sigmoid'))
     rms = RMSprop(learning_rate=0.0015)
-    resNetModel.summary()
+    # resNetModel.summary()
     resNetModel.compile(optimizer=rms, loss='categorical_crossentropy', metrics=['accuracy', f1])
     resNetHistory = resNetModel.fit(X, Y, epochs=40, batch_size=32, verbose=0,
                                     validation_data=(x_test, y_test))
@@ -144,7 +144,7 @@ if __name__ == '__main__':
     VGG16Model.add(Dense(units=16, activation='relu'))
     VGG16Model.add(Dense(3, activation='sigmoid'))
     rms = RMSprop(learning_rate=0.0015)
-    VGG16Model.summary()
+    # VGG16Model.summary()
     VGG16Model.compile(optimizer=rms, loss='categorical_crossentropy', metrics=['accuracy', f1])
     VGG16History = VGG16Model.fit(X, Y, epochs=40, batch_size=32, verbose=0,
                                   validation_data=(x_test, y_test))
